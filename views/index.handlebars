@@ -1,0 +1,46 @@
+<!-- Form example from https://getbootstrap.com/docs/4.0/components/forms/ -->
+
+<form method="POST" action="/" id="form">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;"
+        id="errorForNotFilledRecaptcha">
+        <strong>You forgot the ReCaptcha</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    {{{ captcha }}}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<!-- captcha-->
+<script>
+    document.getElementById('form').onsubmit = function () {
+        return isValidRecaptcha();
+    };
+
+    function isValidRecaptcha() {
+        var response = grecaptcha.getResponse();
+        if (response.length == 0) {
+            $('#errorForNotFilledRecaptcha').css('display', 'block')
+            return false;
+        }
+        return true;
+    }
+</script>
